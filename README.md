@@ -5,12 +5,17 @@ jQuery Declarative is a utility that help making jQuery plugin assignment and in
 
 ----
 
-A simple example...
+**Usage:**
+
+```html
+<div data-ui-accordion="{}">...</div>
+```
+**In javaScript:**
+Convert normal jQuery plugin to be declarative.
 
 ```javascript
-
+$deClear($.fn.accordion);
 ```
-
 
 License
 ----
