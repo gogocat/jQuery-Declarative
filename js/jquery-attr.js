@@ -3,7 +3,17 @@
 (function($) {
 	"use strict";
 	// keep jQuery native $.fn.attr
-	var oldAttr = $.fn.attr;
+	var oldAttr = $.fn.attr,
+		Use = function(context){
+			this.ctx = context;
+		},
+		jQueryDeclear = function(selector, plugin) {
+			var self = this;
+			if (typeof selector === "string" && plugin) {
+				self.use = new Use(self);
+				return self init(selector, plugin);
+			}
+		};
 	
 	// call $(element).attr() return a object of attributes
 	$.fn.attr = function() {
@@ -40,10 +50,32 @@
 		return ret;
 	}
 	
+	// extend jQuery
 	$.extend({
 		evalAttr: function(opt) {
 			return evalAttr(opt);
 		}
 	});
+	
+	// jQueryDeclear
+	jQueryDeclear.prototype = {
+		pluginOption: null,
+		init: function(selector, plugin) {
+			var self = this;
+			self.pluginSelector = "[" + $.trim(pluginSelector) + "]";
+			setTimeout(function() {
+				if (self.pluginOption) {
+					$(self.pluginSelector)
+				}
+			});
+		}
+	};
+	
+	Use.prototype = {
+		option: function(option) {
+			var self = this;
+			self.ctx.pluginOption = option;
+		}
+	};
 	
 })(jQuery);
