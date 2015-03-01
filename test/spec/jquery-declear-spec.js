@@ -5,7 +5,7 @@ describe("jQuery Declear - $deClear", function() {
 		plugin,
 		pluginHeaderOption;
 		
-	$deClear($.fn.accordion).use.option({header: accdHeaderSelector});
+	$deClear("[data-ui-accordion]", $.fn.accordion).use.option({header: accdHeaderSelector});
 	
 	beforeEach(function() {
 		plugin = $("#accordion").data().uiAccordion,

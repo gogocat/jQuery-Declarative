@@ -9,29 +9,11 @@
 		},
 		jQueryDeclear = function(selector, plugin) {
 			var self = this;
-			if (typeof selector === "string" && plugin) {
+			if (typeof selector === "string" && typeof plugin === "string") {
 				self.use = new Use(self);
 				return self init(selector, plugin);
 			}
 		};
-	
-	// call $(element).attr() return a object of attributes
-	$.fn.attr = function() {
-		var obj;
-		if(arguments.length === 0) {
-			if(this.length === 0) {
-				return null;
-			}
-			obj = {};
-			$.each(this[0].attributes, function() {
-				if(this.specified) {
-					obj[this.name] = this.value;
-				}
-			});
-			return obj;
-		}
-		return oldAttr.apply(this, arguments);
-	};
   
 	// evaluate attr sting options to javascript object
 	// @opt example "{sample:'name', sampleBoolean: true}"
@@ -39,7 +21,7 @@
 	function evalAttr(opt) {
 		var fnbody = 'return ', fn, ret;
 		if (typeof opt !== "string") {
-			return opt;
+			return null;
 		}
 		try {
 			fn = new Function(fnbody + opt + ";");
@@ -62,19 +44,34 @@
 		pluginOption: null,
 		init: function(selector, plugin) {
 			var self = this;
-			self.pluginSelector = "[" + $.trim(pluginSelector) + "]";
+			
+			self.pluginSelector = $.trim(pluginSelector);
+			self.element = $(self.pluginSelector);
+			self.pluginOption = self.getAttrOptions();
 			setTimeout(function() {
-				if (self.pluginOption) {
-					$(self.pluginSelector)
-				}
+				self.assignPlugin();
 			});
+		},
+		getAttrOptions: function() {
+			var attrOptions = self.element.attr(self.pluginSelector),
+				ret = null;
+			if(attrOptions) {
+				ret = evalAttr(attrOptions);
+			}
+			return ret; 
+		},
+		assignPlugin: function() {
+			self.element[plugin](self.pluginOption);
 		}
 	};
 	
 	Use.prototype = {
 		option: function(option) {
 			var self = this;
-			self.ctx.pluginOption = option;
+			if ($.isPlainObject(option)) {
+				self.ctx.pluginOption = self.ctx.pluginOption || {};
+				$.extend(self.ctx.pluginOption, option);
+			}
 		}
 	};
 	
