@@ -33,10 +33,14 @@ describe("jQuery Declear - $deClear", function() {
 		expect(plugin.options.animate).toEqual(200);
 	});
 	
-	it("accordion plugin original method should still work", function() {
-		$accd.accordion( "disable" );
-		
+	it("accordion plugin original header method should still work", function() {
+		var accdHeader = $accd.accordion.accordion( "option", "header" );
+		expect(accdHeader).toEqual(accdHeaderSelector);
 	});
 	
+	it("accordion plugin original heightStyle method should still work", function() {
+		var heightStyle = $( ".selector" ).accordion( "option", "heightStyle" );
+		expect(heightStyle).toEqual("content");
+	});
 });
 
