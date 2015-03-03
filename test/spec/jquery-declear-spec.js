@@ -42,5 +42,12 @@ describe("jQuery Declear - $deClear", function() {
 		var heightStyle = $( ".selector" ).accordion( "option", "heightStyle" );
 		expect(heightStyle).toEqual("content");
 	});
+	
+	it("Call $deClear('[data-ui-accordion]').undo() should unbind accordion plugin ", function() {
+		var accdHeader;
+		$deClear('[data-ui-accordion]').undo();
+		accdHeader = $accd.accordion.accordion( "option", "header" );
+		expect(accdHeader).toBeDefined();
+	});
 });
 
