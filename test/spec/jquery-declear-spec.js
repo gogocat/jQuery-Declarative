@@ -5,7 +5,10 @@ describe("jQuery Declear - $deClear", function() {
 		plugin,
 		pluginHeaderOption;
 		
-	$deClear("[data-ui-accordion]", $.fn.accordion).use.option({header: accdHeaderSelector});
+	$deClear("[data-ui-accordion]", $.fn.accordion)
+		.use.option({header: accdHeaderSelector})
+		.use.observer()
+		.init();
 	
 	beforeEach(function() {
 		plugin = $("#accordion").data().uiAccordion,
@@ -39,8 +42,14 @@ describe("jQuery Declear - $deClear", function() {
 	});
 	
 	it("accordion plugin original heightStyle method should still work", function() {
-		var heightStyle = $( ".selector" ).accordion( "option", "heightStyle" );
+		var heightStyle = $accd.accordion( "option", "heightStyle" );
 		expect(heightStyle).toEqual("content");
+	});
+	
+	it("accordion plugin should auto bind when DOM mutated", function() {
+		var newAccd = $('<div id="accd2" data-ui-accordion="{header: > div > h2, }"><div><h2>header</h2></div><div>panel</div></div>');
+		$("body").append(newAccd);
+		expect($("#accd2").data().uiAccordion).toBeDefined();
 	});
 	
 	it("Call $deClear('[data-ui-accordion]').undo() should unbind accordion plugin ", function() {
@@ -49,5 +58,7 @@ describe("jQuery Declear - $deClear", function() {
 		accdHeader = $accd.accordion.accordion( "option", "header" );
 		expect(accdHeader).toBeDefined();
 	});
+
 });
+
 
