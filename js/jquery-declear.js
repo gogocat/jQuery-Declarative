@@ -48,9 +48,9 @@
 			self.pluginSelector = $.trim(pluginSelector);
 			self.element = $(self.pluginSelector);
 			self.pluginOption = self.getAttrOptions();
-			setTimeout(function() {
-				self.assignPlugin();
-			});
+			if (self.element.length) {
+				return self.assignPlugin();
+			}
 		},
 		getAttrOptions: function() {
 			var attrOptions = self.element.attr(self.pluginSelector),
@@ -67,11 +67,14 @@
 	
 	Use.prototype = {
 		option: function(option) {
-			var self = this;
 			if ($.isPlainObject(option)) {
 				self.ctx.pluginOption = self.ctx.pluginOption || {};
 				$.extend(self.ctx.pluginOption, option);
 			}
+			return this;
+		},
+		observer: function() {
+			return this;
 		}
 	};
 	
