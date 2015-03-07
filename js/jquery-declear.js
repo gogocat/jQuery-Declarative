@@ -13,6 +13,7 @@
 				self.use = new Use(self);
 				self.pluginSelector = $.trim(selector);
 				self.pluginName = $.trim(plugin);
+				self.attrSelector = self.pluginSelector.replace("[","").replace("]","");
 				return self;
 			}
 		};
@@ -22,16 +23,18 @@
 		pluginOption: null,
 		init: function() {
 			var self = this;
-			self.element = $(self.pluginSelector);
-			if (self.element.length) {
-				self.pluginOption = self.getAttrOptions();
-				return self.assignPlugin();
-			}
+			$(document).ready(function() {
+				self.element = $(self.pluginSelector);
+				if (self.element.length) {
+					self.pluginOption = self.getAttrOptions();
+					return self.assignPlugin();
+				}
+			});
 		},
 		getAttrOptions: function() {
 			var self = this,
-				attrOptions = self.element.attr(self.pluginSelector),
-				ret = null;
+				attrOptions = self.element.attr(self.attrSelector),
+				ret = {};
 			if(attrOptions) {
 				ret = evalAttr(attrOptions);
 			}
@@ -39,9 +42,7 @@
 		},
 		assignPlugin: function() {
 			var self = this;
-			$(document).ready(function() {
-				self.element[self.pluginName](self.pluginOption);
-			});
+			self.element[self.pluginName](self.pluginOption);
 		}
 	};
 	
@@ -64,15 +65,15 @@
 	// @opt example "{sample:'name', sampleBoolean: true}"
 	// @return {sample:'name', sampleBoolean: true}
 	function evalAttr(opt) {
-		var fnbody = 'return ', fn, ret;
+		var fnbody = 'return ', fn, ret = {};
 		if (typeof opt !== "string") {
-			return null;
+			return ret;
 		}
 		try {
 			fn = new Function(fnbody + opt + ";");
 			ret = fn();
 		} catch(err) {
-			ret = null;
+			return ret;
 		}
 		return ret;
 	}
