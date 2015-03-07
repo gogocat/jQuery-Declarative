@@ -12,7 +12,7 @@
 			if (typeof selector === "string" && typeof plugin === "string") {
 				self.use = new Use(self);
 				self.pluginSelector = $.trim(selector);
-				self.pluginName = $.trim(plugin);
+				self.pluginName = $.trim(plugin).replace("$.fn.", "");
 				self.attrSelector = self.pluginSelector.replace("[","").replace("]","");
 				return self;
 			}
@@ -20,13 +20,14 @@
   
 	// jQueryDeclear
 	jQueryDeclear.prototype = {
-		pluginOption: null,
+		pluginOption: {},
 		init: function() {
 			var self = this;
 			$(document).ready(function() {
 				self.element = $(self.pluginSelector);
 				if (self.element.length) {
-					self.pluginOption = self.getAttrOptions();
+					self.attrOptions = self.getAttrOptions();
+					self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
 					return self.assignPlugin();
 				}
 			});
@@ -50,7 +51,6 @@
 		option: function(option) {
 			var self = this;
 			if ($.isPlainObject(option)) {
-				self.ctx.pluginOption = self.ctx.pluginOption || {};
 				$.extend(self.ctx.pluginOption, option);
 			}
 			return self.ctx;

@@ -1,5 +1,5 @@
 describe("jQuery Declear - $deClear", function() {
-	var accdHeaderSelector = "> div > h3",
+	var accdHeaderSelector = "",
 		accdSelector = "[data-ui-accordion]",
 		$accd = $(accdSelector),
 		plugin,
