@@ -11,16 +11,17 @@
 			var self = this;
 			if (typeof selector === "string" && typeof plugin === "string") {
 				self.use = new Use(self);
-				return self.init(selector, plugin);
+				self.pluginSelector = $.trim(selector);
+				self.pluginName = $.trim(plugin);
+				return self;
 			}
 		};
   
 	// jQueryDeclear
 	jQueryDeclear.prototype = {
 		pluginOption: null,
-		init: function(selector, plugin) {
+		init: function() {
 			var self = this;
-			self.pluginSelector = $.trim(selector);
 			self.element = $(self.pluginSelector);
 			if (self.element.length) {
 				self.pluginOption = self.getAttrOptions();
@@ -28,7 +29,8 @@
 			}
 		},
 		getAttrOptions: function() {
-			var attrOptions = self.element.attr(self.pluginSelector),
+			var self = this,
+				attrOptions = self.element.attr(self.pluginSelector),
 				ret = null;
 			if(attrOptions) {
 				ret = evalAttr(attrOptions);
@@ -36,7 +38,8 @@
 			return ret; 
 		},
 		assignPlugin: function() {
-			self.element[plugin](self.pluginOption);
+			var self = this;
+			self.element[self.pluginName](self.pluginOption);
 		}
 	};
 	
@@ -84,4 +87,5 @@
 		return new jQueryDeclear(selector, plugin);
 	};
 	
-})(jQuery, this);
+	
+})(jQuery, typeof window !== "undefined" ? window : this);
