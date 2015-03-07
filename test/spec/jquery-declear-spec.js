@@ -1,15 +1,18 @@
 describe("jQuery Declear - $deClear", function() {
-	var accdHeaderSelector = "",
+	var accdHeaderSelector = "> h3",
 		accdSelector = "[data-ui-accordion]",
 		$accd = $(accdSelector),
 		plugin,
 		pluginHeaderOption;
+	
+	//$("[data-ui-accordion]").accordion();
 		
 	$deClear("[data-ui-accordion]", "$.fn.accordion")
 		.use.option({header: accdHeaderSelector})
 		.use.observer()
 		.init();
-	
+		
+	/*
 	beforeEach(function() {
 		plugin = $("#accordion").data().uiAccordion,
 		pluginHeaderOption = plugin.options.header;
@@ -22,7 +25,7 @@ describe("jQuery Declear - $deClear", function() {
 	it("Element should has jquery plugin in data object", function() {
 		expect(plugin).toBeDefined();
 	});
-/*
+
 	it("Element jquery plugin options should be '> div > h3' ", function() {
 		expect(pluginHeaderOption).toEqual(accdHeaderSelector);
 	});
