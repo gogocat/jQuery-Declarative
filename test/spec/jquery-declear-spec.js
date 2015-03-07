@@ -5,7 +5,7 @@ describe("jQuery Declear - $deClear", function() {
 		plugin,
 		pluginHeaderOption;
 		
-	$deClear("[data-ui-accordion]", $.fn.accordion)
+	$deClear("[data-ui-accordion]", "$.fn.accordion")
 		.use.option({header: accdHeaderSelector})
 		.use.observer()
 		.init();
@@ -27,9 +27,6 @@ describe("jQuery Declear - $deClear", function() {
 		expect(pluginHeaderOption).toEqual(accdHeaderSelector);
 	});
 	
-	it("Element jquery plugin should be an instance of $deClear", function() {
-		expect(instanceof plugin).toEqual($deClear);
-	});
 	
 	it("accordion plugin original option setter should still work", function() {
 		$accd.accordion( "option", "animate", 200 );
