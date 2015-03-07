@@ -39,7 +39,9 @@
 		},
 		assignPlugin: function() {
 			var self = this;
-			self.element[self.pluginName](self.pluginOption);
+			$(document).ready(function() {
+				self.element[self.pluginName](self.pluginOption);
+			});
 		}
 	};
 	
