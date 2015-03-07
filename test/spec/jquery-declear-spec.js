@@ -22,7 +22,7 @@ describe("jQuery Declear - $deClear", function() {
 	it("Element should has jquery plugin in data object", function() {
 		expect(plugin).toBeDefined();
 	});
-
+/*
 	it("Element jquery plugin options should be '> div > h3' ", function() {
 		expect(pluginHeaderOption).toEqual(accdHeaderSelector);
 	});
@@ -55,7 +55,7 @@ describe("jQuery Declear - $deClear", function() {
 		accdHeader = $accd.accordion.accordion( "option", "header" );
 		expect(accdHeader).toBeDefined();
 	});
-
+*/
 });
 
 
