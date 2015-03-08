@@ -1,3 +1,10 @@
+/*
+*	jQueryDeclear
+*	Copyright (c) 2014, Adam Chow
+*	BSD License
+*	[https://github.com/gogocat/jQuery-Declarative]
+*/
+
 /* JSOL
  * Copyright 2010, Google Inc.
  * All rights reserved.
@@ -10,12 +17,8 @@
 
 (function($, env) {
 	"use strict";
-	// keep jQuery native $.fn.attr
-	var oldAttr = $.fn.attr,
-		Use = function(context){
-			this.ctx = context;
-		},
-		jQueryDeclear = function(selector, plugin) {
+
+	var jQueryDeclear = function(selector, plugin) {
 			var self = this;
 			if (typeof selector === "string" && typeof plugin === "string") {
 				self.use = new Use(self);
@@ -25,8 +28,13 @@
 				return self;
 			}
 		},
+		Use = function(context){
+			this.ctx = context;
+		},
+		enableDebug = false,
 		trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g,
-		JSOL = {};
+		JSOL = {},
+		originalAttr;
   
 	// jQueryDeclear
 	jQueryDeclear.prototype = {
@@ -68,6 +76,11 @@
 		observer: function() {
 			var self = this;
 			return self.ctx;
+		},
+		debug: function(isEnable) {
+			var self = this;
+			enableDebug = (isEnable === false) ? false : true;
+			return self.ctx;
 		}
 	};
 	
@@ -92,10 +105,11 @@
 			return (new Function("return " + text))();
 		}
 		else {
-			//throw("Invalid JSOL: " + text);
+			if (enableDebug) {
+				throw("Invalid JSOL: " + text);
+			}
 		}
 	};
-	
 	
 	// evaluate attr sting options to javascript object
 	// @opt example "{sample:'name', sampleBoolean: true}"
@@ -104,6 +118,26 @@
 		var ret = JSOL.parse(opt) || {};
 		return ret;
 	}
+	
+	// decorate $.fn.attr
+	// $(element).attr() return a JSON object
+	originalAttr = $.fn.attr;
+	$.fn.attr = function() {
+		var obj;
+		if(arguments.length === 0) {
+			if(this.length === 0) {
+				return null;
+			}
+			obj = {};
+			$.each(this[0].attributes, function() {
+				if(this.specified) {
+					obj[this.name] = this.value;
+				}
+			});
+			return obj;
+		}
+		return originalAttr.apply(this, arguments);
+	};
 	
 	// extend jQuery
 	$.extend({
