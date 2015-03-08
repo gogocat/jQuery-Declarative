@@ -18,25 +18,30 @@
 (function($, env) {
 	"use strict";
 
-	var jQueryDeclear = function(selector, plugin) {
-			var self = this;
-			if (typeof selector === "string" && typeof plugin === "string") {
-				self.use = new Use(self);
-				self.pluginSelector = $.trim(selector);
-				self.pluginName = $.trim(plugin).replace("$.fn.", "");
-				self.attrSelector = self.pluginSelector.replace("[","").replace("]","");
-				return self;
-			}
-		},
-		Use = function(context){
-			this.ctx = context;
-		},
-		enableDebug = false,
+	var enableDebug = false,
 		trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g,
 		JSOL = {},
 		originalAttr;
+	
+	// Use constructor
+	function Use(context){
+		this.ctx = context;
+	}
+	
+	// jQueryDeclear constructor
+	function jQueryDeclear(selector, plugin) {
+		var self = this;
+		self.constructor = jQueryDeclear;
+		if (typeof selector === "string" && typeof plugin === "string") {
+			self.use = new Use(self);
+			self.pluginSelector = $.trim(selector);
+			self.pluginName = $.trim(plugin).replace("$.fn.", "");
+			self.attrSelector = self.pluginSelector.replace("[","").replace("]","");
+			return self;
+		}
+	}
   
-	// jQueryDeclear
+	
 	jQueryDeclear.prototype = {
 		pluginOption: {},
 		init: function() {
