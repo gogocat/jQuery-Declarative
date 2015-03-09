@@ -44,16 +44,24 @@
 	
 	jQueryDeclear.prototype = {
 		pluginOption: {},
-		init: function() {
-			var self = this;
-			$(document).ready(function() {
-				self.element = $(self.pluginSelector);
-				if (self.element.length) {
-					self.attrOptions = self.getAttrOptions();
-					self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
-					return self.assignPlugin();
-				}
-			});
+		init: function(defer) {
+			var self = this,
+				isDefer = (defer === false) ? false: true,
+				onReady = function() {
+					self.element = $(self.pluginSelector);
+					if (self.element.length) {
+						self.attrOptions = self.getAttrOptions();
+						self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
+						return self.assignPlugin();
+					}
+				};
+				
+			if (isDefer) {
+				// TODO make jquery deffer obj
+				// return promise;
+			}
+			// TODO: check if running at Node js
+			$(document).ready(onReady);
 		},
 		getAttrOptions: function() {
 			var self = this,
