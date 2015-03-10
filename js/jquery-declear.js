@@ -36,7 +36,7 @@
 			self.use = new Use(self);
 			self.pluginSelector = $.trim(selector);
 			self.pluginName = $.trim(plugin).replace("$.fn.", "");
-			self.attrSelector = self.pluginSelector.replace("[","").replace("]","");
+			self.attrSelector = self.pluginSelector.replace(/.+|\[/,"").replace("]","");
 			return self;
 		}
 	}
@@ -44,24 +44,25 @@
 	
 	jQueryDeclear.prototype = {
 		pluginOption: {},
-		init: function(defer) {
+		init: function() {
 			var self = this,
-				isDefer = (defer === false) ? false: true,
-				onReady = function() {
-					self.element = $(self.pluginSelector);
+				$element = $(self.pluginSelector),
+				onReady = function($element) {
+					self.element = $element || $(self.pluginSelector);
 					if (self.element.length) {
 						self.attrOptions = self.getAttrOptions();
 						self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
-						return self.assignPlugin();
+						self.assignPlugin();
 					}
 				};
-				
-			if (isDefer) {
-				// TODO make jquery deffer obj
-				// return promise;
+
+			if ($element.length) {
+				onReady($element);
+			} else {
+				$(document).ready(function() {
+					onReady();
+				});
 			}
-			// TODO: check if running at Node js
-			$(document).ready(onReady);
 		},
 		getAttrOptions: function() {
 			var self = this,
