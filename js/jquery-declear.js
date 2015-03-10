@@ -90,6 +90,13 @@
 			var self = this;
 			return self.ctx;
 		},
+		setAttrSelector: function(attrSelector) {
+			var self = this;
+			if(typeof attrSelector === "string") {
+				self.ctx.attrSelector = attrSelector;
+			}
+			return self.ctx;
+		},
 		debug: function(isEnable) {
 			var self = this;
 			enableDebug = (isEnable === false) ? false : true;
