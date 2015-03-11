@@ -45,10 +45,26 @@ describe("jQuery Declear - $deClear", function() {
 		var heightStyle = $accd.accordion( "option", "heightStyle" );
 		expect(heightStyle).toEqual("content");
 	});
+	
+	it("accordion", function() {
+		var accdHeader = $accd.accordion( "option", "header" );
+		expect(accdHeader).toEqual(accdHeaderSelector);
+	});
 
 });
 
-
-
+describe("jQuery Declear - use on jq-accordion custom tag", function() {
+	var accdHeaderSelector = "> h3",
+		accdSelector = "jq-accordion",
+		$accd = $(accdSelector),
+		plugin,
+		pluginHeaderOption;
+	
+	$deClear("jq-accordion", "$.fn.accordion")
+		.use.setAttrSelector("data-ui-option")
+		.use.option({header: accdHeaderSelector})
+		.init();
+		
+});
 
 
