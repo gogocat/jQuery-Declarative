@@ -10,6 +10,7 @@ describe("jQuery Declear - $deClear", function() {
 	// assign accordion plugin
 	window.declear = $deClear("[data-ui-accordion]", "$.fn.accordion")
 		.use.option({header: accdHeaderSelector})
+		.use.debug(true)
 		.init();
 
 	
@@ -63,6 +64,7 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 	$deClear("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option")
 		.use.option({header: accdHeaderSelector})
+		.use.debug(true)
 		.init();
 		
 });
