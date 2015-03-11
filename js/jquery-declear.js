@@ -36,7 +36,7 @@
 			self.use = new Use(self);
 			self.pluginSelector = $.trim(selector);
 			self.pluginName = $.trim(plugin).replace("$.fn.", "");
-			self.attrSelector = self.pluginSelector.replace(/.+|\[/,"").replace("]","");
+			self.attrSelector = self.pluginSelector.replace(/^\[|.+\[/,"").replace("]","");
 			return self;
 		}
 	}
@@ -63,7 +63,7 @@
 					onReady();
 				});
 			}
-			return self;
+			//return self;
 		},
 		getAttrOptions: function() {
 			var self = this,
