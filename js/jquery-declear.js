@@ -63,6 +63,7 @@
 					onReady();
 				});
 			}
+			return self;
 		},
 		getAttrOptions: function() {
 			var self = this,
