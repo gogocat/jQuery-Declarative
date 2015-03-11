@@ -87,10 +87,6 @@
 			}
 			return self.ctx;
 		},
-		observer: function() {
-			var self = this;
-			return self.ctx;
-		},
 		setAttrSelector: function(attrSelector) {
 			var self = this;
 			if(typeof attrSelector === "string") {
