@@ -58,9 +58,11 @@ describe("jQuery Declear - $deClear", function() {
 		expect(accdheader2.next(".ui-accordion-content")).toBeHidden();
 	});
 	
-	it("call accordion enable options should ", function() {
-		var accdHeader = $accd.accordion( "option", "header" );
-		expect(accdHeader).toEqual(accdHeaderSelector);
+	it("call accordion enable options should allow 2nd header click and open content pane", function() {
+		var accdHeader = $accd.accordion("enable"),
+			accdheader2 = $("#accordion h3:eq(1)");		
+		accdheader2.click();
+		expect(accdheader2.next(".ui-accordion-content")).toBeVisible();
 	});
 
 });
