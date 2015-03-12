@@ -47,7 +47,18 @@ describe("jQuery Declear - $deClear", function() {
 		expect(heightStyle).toEqual("content");
 	});
 	
-	it("accordion", function() {
+	it("call accordion header options should be '> h3'", function() {
+		var accdHeader = $accd.accordion( "option", "header" );
+		expect(accdHeader).toEqual(accdHeaderSelector);
+	});
+	
+	it("accordion should be disabled - click 2nd header and 2nd content pane should be hidden", function() {
+		var accdheader2 = $("#accordion h3:eq(1)");
+		accdheader2.click();
+		expect(accdheader2.next(".ui-accordion-content")).toBeHidden();
+	});
+	
+	it("call accordion enable options should ", function() {
 		var accdHeader = $accd.accordion( "option", "header" );
 		expect(accdHeader).toEqual(accdHeaderSelector);
 	});
