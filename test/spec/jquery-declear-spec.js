@@ -71,15 +71,20 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 	var accdHeaderSelector = "> h3",
 		accdSelector = "jq-accordion",
 		$accd = $(accdSelector),
-		plugin,
-		pluginHeaderOption;
+		declearRef;
 	
-	$deClear("jq-accordion", "$.fn.accordion")
+	declearRef = $deClear("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option")
 		.use.option({header: accdHeaderSelector})
-		.use.debug(true)
-		.init();
+		.use.debug(true);
 		
+	$.get("spec/fixtures/accordionContent.html", function(data, status){
+		if(data && status === "success") {
+			$accd.html(data);
+			declearRef.init();
+		}
+    });
+	
 });
 
 
