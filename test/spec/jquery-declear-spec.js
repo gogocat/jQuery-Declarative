@@ -78,12 +78,21 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		.use.option({header: accdHeaderSelector})
 		.use.debug(true);
 		
-	$.get("spec/fixtures/accordionContent.html", function(data, status){
-		if(data && status === "success") {
-			$accd.html(data);
-			declearRef.init();
-		}
-    });
+	beforeEach(function(done) {
+		$.get("spec/fixtures/accordionContent.html", function(data, status){
+			if(data && status === "success") {
+				$accd.html(data);
+				declearRef.init();
+			}
+			done();
+		});
+	});
+	
+	it("jq-accordion should have been initialised", function(done) {
+		var plugin = $("jq-accordion").data().uiAccordion;
+		expect(plugin).toBeDefined();
+		done();
+	});
 	
 });
 
