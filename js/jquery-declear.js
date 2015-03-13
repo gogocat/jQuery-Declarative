@@ -95,6 +95,20 @@
 			}
 			return self.ctx;
 		},
+		before: function(fn) {
+			var self = this;
+			if(typeof fn === "function") {
+				self.before = fn;
+			}
+			return self.ctx;
+		},
+		after: function(fn) {
+			var self = this;
+			if(typeof fn === "function") {
+				self.after = fn;
+			}
+			return self.ctx;
+		},
 		debug: function(isEnable) {
 			var self = this;
 			enableDebug = (isEnable === false) ? false : true;
