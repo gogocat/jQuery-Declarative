@@ -50,9 +50,15 @@
 				onReady = function($element) {
 					self.element = $element || $(self.pluginSelector);
 					if (self.element.length) {
+						if(typeof self.before === "function"){
+							self.before(self);
+						}
 						self.attrOptions = self.getAttrOptions();
 						self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
 						self.assignPlugin();
+						if(typeof self.after === "function"){
+							self.after(self);
+						}
 					}
 				};
 
