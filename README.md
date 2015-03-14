@@ -1,8 +1,8 @@
 jQuery Declarative
 =======
 
-jQuery Declarative is a helper utility that makes jQuery plugin assignment using declarative syntax.
-The result is similar to Angular directive, where plugin options can be supply using object literal definition on the element. 
+jQuery Declarative is a helper utility that allows you to declare a jQuery plugin using declarative syntax.
+The result is similar to Angular directive, where plugin options can also be supply using object literal definition. 
 
 ----
 
