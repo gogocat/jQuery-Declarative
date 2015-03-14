@@ -95,7 +95,7 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		$.get("spec/fixtures/accordionContent.html", function(data, status){
 			if(data && status === "success") {
 				$accd.html(data);
-				declearRef.use.after(function() {
+				declareRef.use.after(function() {
 					contentloaded = true;
 					plugin = $("jq-accordion").data().uiAccordion;
 					pluginOptions = plugin.options;
