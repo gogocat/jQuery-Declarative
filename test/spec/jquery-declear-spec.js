@@ -1,6 +1,6 @@
 	
 // start jasmine unit testing
-describe("jQuery Declear - $deClear", function() {
+describe("jQuery Declear - $declare", function() {
 	var accdHeaderSelector = "> h3",
 		accdSelector = "[data-ui-accordion]",
 		$accd = $(accdSelector),
@@ -8,7 +8,7 @@ describe("jQuery Declear - $deClear", function() {
 		pluginHeaderOption;
 	
 	// assign accordion plugin
-	window.declear = $deClear("[data-ui-accordion]", "$.fn.accordion")
+	window.declear = $declare("[data-ui-accordion]", "$.fn.accordion")
 		.use.option({header: accdHeaderSelector})
 		.use.debug(true)
 		.init();
@@ -20,7 +20,7 @@ describe("jQuery Declear - $deClear", function() {
 	});
 	
 	it("should be a global function", function() {
-		expect(typeof $deClear).toBe("function");
+		expect(typeof $declare).toBe("function");
 	});
 	
 	it("Element should has jquery plugin data object", function() {
@@ -77,7 +77,7 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		plugin,
 		pluginOptions;
 	
-	declearRef = $deClear("jq-accordion", "$.fn.accordion")
+	declearRef = $declare("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option")
 		.use.option({header: accdHeaderSelector})
 		.use.before(function(ctx){

@@ -42,7 +42,7 @@
 	}
   
 	
-	jQueryDeclear.prototype = {
+	jQueryDeclare.prototype = {
 		pluginOption: {},
 		init: function() {
 			var self = this,
@@ -185,9 +185,9 @@
 		}
 	});
 	
-	// set $deClear to global
-	env.$deClear = function(selector, plugin) {
-		return new jQueryDeclear(selector, plugin);
+	// set $declare to global
+	env.$declare = function(selector, plugin) {
+		return new jQueryDeclare(selector, plugin);
 	};
 	
 	
