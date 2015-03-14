@@ -44,6 +44,7 @@
 	
 	jQueryDeclear.prototype = {
 		pluginOption: {},
+		// TODO: consider to make this callback using promise
 		init: function() {
 			var self = this,
 				$element = $(self.pluginSelector),
@@ -101,6 +102,7 @@
 			}
 			return self.ctx;
 		},
+		
 		before: function(fn) {
 			var self = this;
 			if(typeof fn === "function") {
