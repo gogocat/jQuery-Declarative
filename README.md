@@ -11,7 +11,7 @@ The result is similar to Angular directive, where plugin options can also be sup
 Declare an jQuery UI accordion with options.
 
 ```html
-<div id="accordion" data-ui-accordion="{heightStyle:'content', disabled: true}">
+<div data-ui-accordion="{heightStyle:'content', disabled: true}">
 ```
 **In javaScript:**
 
