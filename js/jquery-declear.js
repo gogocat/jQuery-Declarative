@@ -28,10 +28,10 @@
 		this.ctx = context;
 	}
 	
-	// jQueryDeclear constructor
-	function jQueryDeclear(selector, plugin) {
+	// jQueryDeclare constructor
+	function jQueryDeclare(selector, plugin) {
 		var self = this;
-		self.constructor = jQueryDeclear;
+		self.constructor = jQueryDeclare;
 		if (typeof selector === "string" && typeof plugin === "string") {
 			self.use = new Use(self);
 			self.pluginSelector = $.trim(selector);
