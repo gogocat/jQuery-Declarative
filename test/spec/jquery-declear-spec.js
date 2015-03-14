@@ -86,6 +86,7 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		.use.debug(true);
 	
 	
+	
 	beforeEach(function(done) {
 		if (contentloaded) {
 			done();
