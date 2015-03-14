@@ -73,11 +73,11 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		$accd = $(accdSelector),
 		count = 0,
 		contentloaded = false,
-		declearRef,
+		declareRef,
 		plugin,
 		pluginOptions;
 	
-	declearRef = $declare("jq-accordion", "$.fn.accordion")
+	declareRef = $declare("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option")
 		.use.option({header: accdHeaderSelector})
 		.use.before(function(ctx){
