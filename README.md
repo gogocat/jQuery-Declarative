@@ -15,23 +15,26 @@ Declare an jQuery UI accordion with options.
 ```
 **In javaScript:**
 
-Associate the data attribute selector with jQuery UI accordion.
-
- - set default header option - *merge with individual element's declarative options.*  
- - enable debug mode 
- - initialize the plugin
-
 ```javascript
 $declare("[data-ui-accordion]", "$.fn.accordion")
 	.use.option({header: "> h3"})
 	.use.debug(true)
 	.init();
 ```
+Associate the data attribute selector "**[data-ui-accordion]**" with jQuery UI accordion "**$.fn.accordion**".
 
-**Late binding**
+ - set default header option - *will merge with individual element's declarative options.*  (*optional*)
+ - enable debug mode (*optional*)
+ - initialize the plugin
 
-Sometime, you may want to declare the plugin first but initalize later. 
-eg. after ajax content load.
+
+Late binding
+----------------
+
+Sometime you may want to declare the plugin first but initalize it later. 
+
+**Example:** 
+Making a jQuery UI accordion like a web component and use ajax to load content.
 
 ```html
 <jq-accordion data-ui-option="{heightStyle:'content'}"></jq-accordion>
@@ -39,6 +42,7 @@ eg. after ajax content load.
 
 ```javascript
 // target custom tag "jq-accordion"
+// store into a variable for reference
 var declareRef = $declare("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option") // overwrite internal attribute selector 
 		.use.option({header: "> h3"})
@@ -59,8 +63,24 @@ $.get("accordionContent.html", function(data, status){
 	}
 });
 
+```
 
+**Can I declare callbacks in HTML element?**
 
+No. The reason is that will open opportunity for script injection attack, also very ugly syntax...
+but you can always declare callbacks at the javascript call.
+
+```javascript
+$declare("[data-myPlugin]", "$.fn.myPlugin")
+	.use.option({
+		onShow: function(){
+			// do something
+		},
+		onHide: function(){
+			// do something
+		},
+	})
+	.init();
 ```
 
 License
