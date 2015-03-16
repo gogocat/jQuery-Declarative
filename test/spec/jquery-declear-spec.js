@@ -1,4 +1,4 @@
-	
+
 // start jasmine unit testing
 describe("jQuery Declear - $declare", function() {
 	var accdHeaderSelector = "> h3",
@@ -6,7 +6,7 @@ describe("jQuery Declear - $declare", function() {
 		$accd = $(accdSelector),
 		plugin,
 		pluginHeaderOption;
-	
+
 	// assign accordion plugin
 	window.declear = $declare("[data-ui-accordion]", "$.fn.accordion")
 		.use.option({header: accdHeaderSelector})
@@ -30,7 +30,6 @@ describe("jQuery Declear - $declare", function() {
 	it("Element jquery plugin options should be '> h3' ", function() {
 		expect(pluginHeaderOption).toEqual(accdHeaderSelector);
 	});
-	
 	
 	it("accordion plugin original option setter should still work", function() {
 		$accd.accordion( "option", "animate", 200 );
@@ -116,9 +115,19 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		done();
 	});
 	
-	it("jq-accordion plugin original heightStyle method should still work", function() {
-		var heightStyle = $accd.accordion( "option", "heightStyle" );
+	it("jq-accordion.eq(0) plugin original heightStyle method should still work and should be 'content'", function() {
+		var heightStyle = $accd.eq(0).accordion( "option", "heightStyle" );
 		expect(heightStyle).toEqual("content");
+	});
+	
+	it("jq-accordion.eq(1) plugin original heightStyle method should still work and should be 'auto'", function() {
+		var heightStyle = $accd.eq(1).accordion( "option", "heightStyle" );
+		expect(heightStyle).toEqual("auto");
+	});
+	
+	it("jq-accordion.eq(2 plugin original heightStyle method should still work and should be 'fill'", function() {
+		var heightStyle = $accd.eq(2).accordion( "option", "heightStyle" );
+		expect(heightStyle).toEqual("fill");
 	});
 	
 });
