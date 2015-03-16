@@ -50,15 +50,19 @@
 				onReady = function($element) {
 					self.element = $element || $(self.pluginSelector);
 					if (self.element.length) {
-						if(typeof self.before === "function"){
-							self.before(self);
-						}
-						self.attrOptions = self.getAttrOptions();
-						self.pluginOption = $.extend({}, self.pluginOption, self.attrOptions);
-						self.assignPlugin();
-						if(typeof self.after === "function"){
-							self.after(self);
-						}
+						self.element.each(function(index, el) {
+							var thisElement = $(this),
+								thisAttrOptions = self.getAttrOptions(thisElement),
+								thisPluginOptions = {};
+							if(typeof self.before === "function"){
+								self.before(self);
+							}
+							thisPluginOptions = $.extend({}, self.pluginOption, thisAttrOptions);
+							self.assignPlugin(thisElement, thisPluginOptions);
+							if(typeof self.after === "function"){
+								self.after(self);
+							}
+						});
 					}
 				};
 
@@ -71,18 +75,18 @@
 			}
 			return self;
 		},
-		getAttrOptions: function() {
+		getAttrOptions: function(element) {
 			var self = this,
-				attrOptions = self.element.attr(self.attrSelector),
+				attrOptions = element.attr(self.attrSelector),
 				ret = {};
 			if(attrOptions) {
 				ret = evalAttr(attrOptions);
 			}
 			return ret; 
 		},
-		assignPlugin: function() {
+		assignPlugin: function(element, pluginOptions) {
 			var self = this;
-			self.element[self.pluginName](self.pluginOption);
+			element[self.pluginName](pluginOptions);
 		}
 	};
 	
