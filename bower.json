@@ -1,0 +1,20 @@
+{
+  "name": "jQuery-Declarative",
+  "version": "1.0.0",
+  "description": "jQuery Declarative is a helper utility that allows you to declare a jQuery plugin using declarative syntax. The result is similar to Angular directive, where plugin options can also be supply using object literal definition.",
+  "main": "jquery-declear.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "jQuery",
+    "jquery-plugin",
+    "jquery-declarative",
+    "declarative"
+  ],
+  "authors": [
+    "Adam Chow"
+  ],
+  "license": "BSD",
+  "homepage": "https://github.com/gogocat"
+}
