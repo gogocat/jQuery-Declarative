@@ -55,12 +55,12 @@
 								thisAttrOptions = self.getAttrOptions(thisElement),
 								thisPluginOptions = {};
 							if(typeof self.before === "function"){
-								self.before(self);
+								self.before(thisElement, self);
 							}
 							thisPluginOptions = $.extend({}, self.pluginOption, thisAttrOptions);
 							self.assignPlugin(thisElement, thisPluginOptions);
 							if(typeof self.after === "function"){
-								self.after(self);
+								self.after(thisElement, self);
 							}
 						});
 					}

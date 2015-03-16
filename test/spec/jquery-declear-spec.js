@@ -73,14 +73,12 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		$accd = $(accdSelector),
 		count = 0,
 		contentloaded = false,
-		declareRef,
-		plugin,
-		pluginOptions;
+		declareRef;
 	
 	declareRef = $declare("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option")
 		.use.option({header: accdHeaderSelector})
-		.use.before(function(ctx){
+		.use.before(function(el, ctx){
 			count += 1;
 		})
 		.use.debug(true);
@@ -95,23 +93,26 @@ describe("jQuery Declear - use on jq-accordion custom tag", function() {
 		$.get("spec/fixtures/accordionContent.html", function(data, status){
 			if(data && status === "success") {
 				$accd.html(data);
-				declareRef.use.after(function() {
+				declareRef.use.after(function(el, ctx) {
 					contentloaded = true;
-					plugin = $("jq-accordion").data().uiAccordion;
-					pluginOptions = plugin.options;
 				}).init();	
 			}
 			done();
 		});
 	});
 	
-	it("jq-accordion should have been initialised", function(done) {
-		expect(plugin).toBeDefined();
+	it("each jq-accordion elements should have been initialised", function(done) {
+		var plugin1 = $accd.eq(0).data().uiAccordion,
+			plugin2 = $accd.eq(1).data().uiAccordion,
+			plugin3 = $accd.eq(2).data().uiAccordion;
+		expect(plugin1).toBeDefined();
+		expect(plugin2).toBeDefined();
+		expect(plugin3).toBeDefined();
 		done();
 	});
 	
-	it("jq-accordion before should have been called. Count should be equal 1", function(done) {
-		expect(count).toEqual(1);
+	it("jq-accordion before should have been called. Count should be equal 3", function(done) {
+		expect(count).toEqual(3);
 		done();
 	});
 	
