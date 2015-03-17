@@ -16,7 +16,7 @@ Traditional jQuery plugin assignment is usually something like this using css cl
 $(".ui-accordion").accordion();
 ```
 
-Developers can prefer to use declarative syntax. No more guesting / search of what plugin might bind to the element.
+Developers now prefer to use declarative syntax. No more guesting / search of what plugin might bind to the element.
 
  > **Note:** Attribute selector has been available since jQuery version 1.0
 
