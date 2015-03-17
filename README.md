@@ -6,7 +6,26 @@ The result is similar to Angular directive, where plugin options can also be sup
 
 ----
 
-**Example Usage:**
+Why
+---
+Traditional jQuery plugin assignment is usually something like this using css class or id selector for targeting element (due to support old IEs).
+```html
+<div class="ui-accordion">...</div>
+```
+```javascript
+$(".ui-accordion").accordion();
+```
+
+The day is now gone, and developers can now use declarative syntax. No more guesting / search of what elements might be bind to a plugin.
+ > **Note:** Attribute selector has been available since jQuery version 1.0
+
+*So why use this script?  I can just do...*
+```javascript
+$("[data-ui-accordion]").accordion();
+```
+Well, jQuery declarative script safely parses options declared in the DOM element plus some more benefits.
+
+**Example:**
 
 Declare an jQuery UI accordion with options.
 
@@ -21,12 +40,15 @@ $declare("[data-ui-accordion]", "$.fn.accordion")
 	.use.debug(true)
 	.init();
 ```
-Associate the data attribute selector "**[data-ui-accordion]**" with jQuery UI accordion "**$.fn.accordion**".
+In the above code, we associate the data attribute selector "**[data-ui-accordion]**" with jQuery UI accordion "**$.fn.accordion**" plugin. Then 'use' the following settings and call init() to initialize the plugin.
 
  - set default header option - *will merge with individual element's declarative options.*  (*optional*)
  - enable debug mode (*optional*)
  - initialize the plugin
-
+> **Note:**
+> The options prvoided from the DOM element will merge with options provide in 'use.options()'.
+> The merge order is like so:  **{Final} = {use.option} < {DOM}**
+> Then pattern is most beneficial, when there are multiple elements needs to bind to a same plugin, but some element needs extra settings.
 
 Late binding
 ----------------
@@ -42,7 +64,7 @@ Making a jQuery UI accordion like a web component and use ajax to load content.
 
 ```javascript
 // target custom tag "jq-accordion"
-// store into a variable for reference
+// store the call into a variable for reference
 var declareRef = $declare("jq-accordion", "$.fn.accordion")
 		.use.setAttrSelector("data-ui-option") // overwrite internal attribute selector 
 		.use.option({header: "> h3"})
