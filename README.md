@@ -8,7 +8,7 @@ The result is similar to Angular directive, where plugin options can also be sup
 
 Why
 ---
-Traditional jQuery plugin assignment is usually something like this using css class or id selector for targeting element (due to support old IEs).
+Traditional jQuery plugin assignment is usually something like this using css class or id selector (due to support old IEs).
 ```html
 <div class="ui-accordion">...</div>
 ```
@@ -16,14 +16,15 @@ Traditional jQuery plugin assignment is usually something like this using css cl
 $(".ui-accordion").accordion();
 ```
 
-The day is now gone, and developers can now use declarative syntax. No more guesting / search of what elements might be bind to a plugin.
+Developers can prefer to use declarative syntax. No more guesting / search of what plugin might bind to the element.
+
  > **Note:** Attribute selector has been available since jQuery version 1.0
 
 *So why use this script?  I can just do...*
 ```javascript
 $("[data-ui-accordion]").accordion();
 ```
-Well, jQuery declarative script safely parses options declared in the DOM element plus some more benefits.
+Well, jQuery declarative script safely parses options declared in the DOM element plus some other benefits.
 
 **Example:**
 
@@ -45,10 +46,11 @@ In the above code, we associate the data attribute selector "**[data-ui-accordio
  - set default header option - *will merge with individual element's declarative options.*  (*optional*)
  - enable debug mode (*optional*)
  - initialize the plugin
+ 
 > **Note:**
 > The options prvoided from the DOM element will merge with options provide in 'use.options()'.
 > The merge order is like so:  **{Final} = {use.option} < {DOM}**
-> Then pattern is most beneficial, when there are multiple elements needs to bind to a same plugin, but some element needs extra settings.
+> This pattern is most beneficial, when there are multiple elements needs to bind to a same plugin, but some element needs extra settings.
 
 Late binding
 ----------------
