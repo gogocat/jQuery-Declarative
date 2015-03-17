@@ -50,7 +50,7 @@ In the above code, we associate the data attribute selector "**[data-ui-accordio
 > **Note:**
 > The options prvoided from the DOM element will merge with options provide in 'use.options()'.
 > The merge order is like so:  **{Final} = {use.option} < {DOM}**
-> This pattern is most beneficial, when there are multiple elements needs to bind to a same plugin, but some element needs extra settings.
+> This pattern is most beneficial when there are multiple elements needs to bind to a same plugin, but some element needs different settings.
 
 Late binding
 ----------------
