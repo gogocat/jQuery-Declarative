@@ -56,6 +56,8 @@ In the above code, we associate the data attribute selector "**[data-ui-accordio
 > 
 > **$.fn.** is just for clarify that it is a proper jQuery plug-in. 
 > 
+> Internally it is translated to: 
+>
 >  *$("[data-ui-accordion]").accordion({header: "> h3", heightStyle:'content', disabled: true });*
 >  
 >  Therefore, it should works for any jQuery plug-ins!
