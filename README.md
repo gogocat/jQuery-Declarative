@@ -48,13 +48,17 @@ In the above code, we associate the data attribute selector "**[data-ui-accordio
  - initialize the plug-in
  
 > **Note:**
-> The options provided from the DOM element will merge with options provided in 'use.options()' call.
-> The merge order is like so:  **{Final} = {use.option} < {DOM}**
-> This pattern is most beneficial when there are multiple elements needs to bind to a same plug-in, but some element needs different settings.
-> **$.fn.** is just for clarify that it is a proper jQuery plug-in.
->  Internally it is translated to: 
+> The options provided from the DOM element will merge with options provided in 'use.options()' call. 
+> 
+> The merge order is like so:  **{Final} = {use.option} < {DOM}** 
+> 
+> This pattern is most beneficial when there are multiple elements needs to bind to a same plug-in, but some element needs different settings. 
+> 
+> **$.fn.** is just for clarify that it is a proper jQuery plug-in. 
+> 
 >  *$("[data-ui-accordion]").accordion({header: "> h3", heightStyle:'content', disabled: true });*
->  Therefore, it should works on any jQuery plug-ins!
+>  
+>  Therefore, it should works for any jQuery plug-ins!
 
 Late binding
 ----------------
