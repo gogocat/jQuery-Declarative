@@ -91,7 +91,7 @@ $.get("accordionContent.html", function(data, status){
 
 **Can I declare callbacks in HTML element?**
 
-No. The reason is that will open opportunity for script injection attack, also very ugly syntax...
+No. The reason is that will open up opportunity for script injection attack, also very ugly syntax...
 but you can always declare callbacks at the javascript call.
 
 ```javascript
