@@ -57,7 +57,7 @@
 							if(typeof self.before === "function"){
 								self.before(thisElement, self);
 							}
-							thisPluginOptions = $.extend({}, self.pluginOption, thisAttrOptions);
+							thisPluginOptions = $.extend(true, {}, self.pluginOption, thisAttrOptions);
 							self.assignPlugin(thisElement, thisPluginOptions);
 							if(typeof self.after === "function"){
 								self.after(thisElement, self);
