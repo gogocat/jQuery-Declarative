@@ -32,13 +32,24 @@
 	function jQueryDeclare(selector, plugin) {
 		var self = this;
 		self.constructor = jQueryDeclare;
-		if (typeof selector === "string" && typeof plugin === "string") {
-			self.use = new Use(self);
+        self.attrSelector = "";
+        
+        if (!selector && !plugin) {
+            return;
+        }
+        
+        if (selector instanceof jQuery) {
+            self.element = selector;    
+        }
+		else if (typeof selector === "string") {
 			self.pluginSelector = $.trim(selector);
-			self.pluginName = $.trim(plugin).replace("$.fn.", "");
 			self.attrSelector = self.pluginSelector.replace(/^\[|.+\[/,"").replace("]","");
-			return self;
 		}
+        if (typeof plugin === "string") {
+			self.pluginName = $.trim(plugin).replace("$.fn.", "");
+		}
+        self.use = new Use(self);
+		return self;
 	}
   
 	
@@ -46,7 +57,7 @@
 		pluginOption: {},
 		init: function() {
 			var self = this,
-				$element = $(self.pluginSelector),
+				$element = self.element || $(self.pluginSelector),
 				onReady = function($element) {
 					self.element = $element || $(self.pluginSelector);
 					if (self.element.length) {
@@ -186,13 +197,14 @@
 	$.extend({
 		evalAttr: function(opt) {
 			return evalAttr(opt);
-		}
+		},
+        declare: function(selector, plugin) {
+            return new jQueryDeclare(selector, plugin);
+        }
 	});
 	
 	// set $declare to global
-	env.$declare = function(selector, plugin) {
-		return new jQueryDeclare(selector, plugin);
-	};
+	env.$declare = $.declare;
 	
 	
 })(jQuery, typeof window !== "undefined" ? window : this);
