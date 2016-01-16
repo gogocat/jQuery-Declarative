@@ -21,7 +21,8 @@
 	var enableDebug = false,
 		trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g,
 		JSOL = {},
-		originalAttr;
+		originalAttr,
+		declaredPlugins = {};
 	
 	// Use constructor
 	function Use(context){
@@ -30,104 +31,117 @@
 	
 	// jQueryDeclare constructor
 	function jQueryDeclare(selector, plugin) {
-		var self = this;
+		var self = this,
+			attrSelector;
+			
 		self.constructor = jQueryDeclare;
-        self.attrSelector = "";
+		self.use = new Use(self);
         
-        if (!selector && !plugin) {
+        if (typeof selector !== "string" || typeof plugin !== "string") {
             return;
         }
         
-        if (selector instanceof jQuery) {
-            self.element = selector;    
-        }
-		else if (typeof selector === "string") {
-			self.pluginSelector = $.trim(selector);
-			self.attrSelector = self.pluginSelector.replace(/^\[|.+\[/,"").replace("]","");
-		}
-        if (typeof plugin === "string") {
-			self.pluginName = $.trim(plugin).replace("$.fn.", "");
-		}
-        self.use = new Use(self);
+		selector = $.trim(selector);
+		self.selector = selector;
+		
+		attrSelector = selector.replace(/^\[|.+\[/,"").replace("]","");
+
+		// build internal plugin config obj
+		declaredPlugins[selector] = {
+			elementSelector: selector,
+			attrSelector : attrSelector,
+			pluginName : $.trim(plugin).replace("$.fn.", "")
+		};
+		
+		
+
 		return self;
 	}
   
 	
 	jQueryDeclare.prototype = {
-		pluginOption: {},
 		init: function() {
 			var self = this,
-				$element = self.element || $(self.pluginSelector),
-				onReady = function($element) {
-					self.element = $element || $(self.pluginSelector);
-					if (self.element.length) {
-						self.element.each(function(index, el) {
+				pluginConfig = declaredPlugins[self.selector],
+				$element = $(self.selector),
+				onReady = function($element, config) {
+					$element = $element || $(config.elementSelector);
+					
+					if ($element.length) {
+						$element.each(function(index, el) {
 							var thisElement = $(this),
-								thisAttrOptions = self.getAttrOptions(thisElement),
+								thisAttrOptions = self.getAttrOptions(thisElement, config.attrSelector),
 								thisPluginOptions = {};
-							if(typeof self.before === "function"){
-								self.before(thisElement, self);
+								
+							if(typeof config.before === "function"){
+								config.before(thisElement);
 							}
-							thisPluginOptions = $.extend(true, {}, self.pluginOption, thisAttrOptions);
-							self.assignPlugin(thisElement, thisPluginOptions);
-							if(typeof self.after === "function"){
-								self.after(thisElement, self);
+							thisPluginOptions = $.extend(true, {}, config.options, thisAttrOptions);
+							self.assignPlugin(thisElement, config.pluginName, thisPluginOptions);
+							if(typeof config.after === "function"){
+								config.after(thisElement);
+							}
+							if (enableDebug) {
+								console.log('element: ', thisElement, 'config: ', config, 'merged config: ', thisPluginOptions);
 							}
 						});
 					}
 				};
+			
+			if (!pluginConfig) {
+				return;
+			}
 
 			if ($element.length) {
-				onReady($element);
+				onReady($element, pluginConfig);
 			} else {
 				$(document).ready(function() {
-					onReady();
+					onReady(null, pluginConfig);
 				});
 			}
 			return self;
 		},
-		getAttrOptions: function(element) {
+		getAttrOptions: function(element, attrSelector) {
 			var self = this,
-				attrOptions = element.attr(self.attrSelector),
+				attrOptions = element.attr(attrSelector),
 				ret = {};
 			if(attrOptions) {
 				ret = evalAttr(attrOptions);
 			}
 			return ret; 
 		},
-		assignPlugin: function(element, pluginOptions) {
+		assignPlugin: function(element, pluginName, pluginOptions) {
 			var self = this;
-			element[self.pluginName](pluginOptions);
+			element[pluginName](pluginOptions);
 		}
 	};
 	
 	Use.prototype = {
 		option: function(option) {
 			var self = this;
-			if ($.isPlainObject(option)) {
-				$.extend(self.ctx.pluginOption, option);
+			if (option && $.isPlainObject(option) && declaredPlugins[self.ctx.selector]) {
+				declaredPlugins[self.ctx.selector].options = option;
 			}
 			return self.ctx;
 		},
 		setAttrSelector: function(attrSelector) {
 			var self = this;
-			if(typeof attrSelector === "string") {
-				self.ctx.attrSelector = attrSelector;
+			if(typeof attrSelector === "string" && declaredPlugins[self.ctx.selector]) {
+				declaredPlugins[self.ctx.selector].attrSelector = attrSelector;
 			}
 			return self.ctx;
 		},
-		
 		before: function(fn) {
 			var self = this;
-			if(typeof fn === "function") {
-				self.ctx.before = fn;
+			if(typeof fn === "function" && declaredPlugins[self.ctx.selector]) {
+				declaredPlugins[self.ctx.selector].before = fn;
 			}
 			return self.ctx;
 		},
 		after: function(fn) {
 			var self = this;
-			if(typeof fn === "function") {
-				self.ctx.after = fn;
+			if(typeof fn === "function" && declaredPlugins[self.ctx.selector]) {
+				declaredPlugins[self.ctx.selector].after = fn;
 			}
 			return self.ctx;
 		},
