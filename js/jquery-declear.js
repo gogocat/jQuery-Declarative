@@ -22,6 +22,7 @@
 		trim =  /^(\s|\u00A0)+|(\s|\u00A0)+$/g,
 		JSOL = {},
 		originalAttr,
+		elementDataKey = 'declaredPlugins',
 		declaredPlugins = {};
 	
 	// Use constructor
@@ -71,18 +72,35 @@
 						$element.each(function(index, el) {
 							var thisElement = $(this),
 								thisAttrOptions = self.getAttrOptions(thisElement, config.attrSelector),
-								thisPluginOptions = {};
-								
+								thisPluginOptions = {},
+								declaredPluginData = thisElement.data(elementDataKey);
+							
+							// check if element already assigned plugin
+							if ($.isArray(declaredPluginData)) {
+								if($.inArray(config.pluginName, declaredPluginData)) {
+									return;
+								}
+							} else {
+								declaredPluginData = [];
+							}
+							// execute 'before' callback
 							if(typeof config.before === "function"){
 								config.before(thisElement);
 							}
+							// merge options
 							thisPluginOptions = $.extend(true, {}, config.options, thisAttrOptions);
+							// assign plugin
 							self.assignPlugin(thisElement, config.pluginName, thisPluginOptions);
+							// execute 'after' callback
 							if(typeof config.after === "function"){
 								config.after(thisElement);
 							}
+							// record assigned plugin into element's jquery data
+							declaredPluginData.push(config.pluginName)
+							thisElement.data(elementDataKey, declaredPluginData);
+							
 							if (enableDebug) {
-								console.log('element: ', thisElement, 'config: ', config, 'merged config: ', thisPluginOptions);
+								console.log('element: ', thisElement, ' config: ', config, ' merged plugin option: ', thisPluginOptions, ' declaredPlugin: ', thisElement.data(elementDataKey));
 							}
 						});
 					}
